@@ -9,6 +9,10 @@ import math
 from decimal import Decimal, Overflow as DecOverflow
 from malla import Malla, MallaError, parsear, a_decimal_str, fraccion_str
 
+# Importamos las funciones del módulo de lógica matemática
+from logica_conversor import convertir_base
+from logica_conversor import convertir_base, normalizar_pfn
+
 
 class VentanaConversor(QtWidgets.QMainWindow):
     def __init__(self):
@@ -122,6 +126,42 @@ class VentanaConversor(QtWidgets.QMainWindow):
             accion(self.leer_malla())
         except (ValueError, MallaError) as e:
             QtWidgets.QMessageBox.warning(self, "Labery", str(e))
+        texto_numero = self.txtNumero.text().strip()
+        str_origen = self.comboBaseOrigen.currentText()
+        str_destino = self.comboBaseDestino.currentText()
+        str_t = self.comboT.currentText()
+
+        if not texto_numero:
+            self.frameAlerta.setVisible(True)
+            return
+
+        base_origen = int(str_origen)
+        base_destino = int(str_destino)
+        precision_t = int(str_t) if str_t else 8
+
+        if not (2 <= base_origen <= 16 and 2 <= base_destino <= 16):
+            self.frameAlerta.setVisible(True)
+            return
+        
+        try:
+            resultado_str = convertir_base(texto_numero, base_origen, base_destino, precision_t)
+            pfn_str = normalizar_pfn(resultado_str, base_destino)
+
+            # Escribir en Resultado
+            if hasattr(self, 'lineResultado'):
+                self.lineResultado.setText(resultado_str)
+            elif hasattr(self, 'txtResultado'):
+                self.txtResultado.setText(resultado_str)
+
+            # Escribir en Normalizado
+            if hasattr(self, 'lineNormalizado'):
+                self.lineNormalizado.setText(pfn_str)
+            elif hasattr(self, 'txtNormalizado'):
+                self.txtNormalizado.setText(pfn_str)
+
+        except Exception as e:
+            print("Error durante el cálculo:", e)
+            self.frameAlerta.setVisible(True)
 
     def _info(self, titulo, texto):
         QtWidgets.QMessageBox.information(self, titulo, texto)

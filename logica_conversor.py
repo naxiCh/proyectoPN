@@ -81,3 +81,35 @@ def convertir_base(numero_str: str, base_origen: int, base_destino: int, precisi
     valor_base10 = convertir_a_base10(numero_str, base_origen)
     return convertir_desde_base10(valor_base10, base_destino, precision_t)
 
+def normalizar_pfn(numero_str: str, base_destino: int) -> str:
+    """
+    Convierte la cadena resultado al formato PFN.
+    Si el valor es 0, retorna la restricción teórica (el 0 no se normaliza).
+    """
+    signo = ""
+    if numero_str.startswith("-"):
+        signo = "-"
+        numero_str = numero_str[1:]
+    elif numero_str.startswith("+"):
+        numero_str = numero_str[1:]
+
+    # Contemplar la restricción del cero (f != 0)
+    if set(numero_str.replace(".", "")) == {"0"} or numero_str == "":
+        return "El número cero no se normaliza (f ≠ 0)"
+
+    if "." in numero_str:
+        entera, fraccionaria = numero_str.split(".")
+    else:
+        entera, fraccionaria = numero_str, ""
+
+    if entera != "0" and entera != "":
+        exponente = len(entera)
+        mantisa = entera + fraccionaria
+    else:
+        primer_no_cero = 0
+        while primer_no_cero < len(fraccionaria) and fraccionaria[primer_no_cero] == '0':
+            primer_no_cero += 1
+        exponente = -primer_no_cero
+        mantisa = fraccionaria[primer_no_cero:]
+
+    return f"{signo}0.{mantisa} x {base_destino}^{exponente}"
