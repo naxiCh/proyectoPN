@@ -10,6 +10,7 @@ from decimal import Decimal, Overflow as DecOverflow
 
 # Importamos las funciones del módulo de lógica matemática
 from logica_conversor import convertir_base
+from logica_conversor import convertir_base, normalizar_pfn
 
 
 class VentanaConversor(QtWidgets.QMainWindow):
@@ -94,18 +95,25 @@ class VentanaConversor(QtWidgets.QMainWindow):
         if not (2 <= base_origen <= 16 and 2 <= base_destino <= 16):
             self.frameAlerta.setVisible(True)
             return
-
+        
         try:
             resultado_str = convertir_base(texto_numero, base_origen, base_destino, precision_t)
-            
-            # Escribir en la casilla de resultado de PyQt6
+            pfn_str = normalizar_pfn(resultado_str, base_destino)
+
+            # Escribir en Resultado
             if hasattr(self, 'lineResultado'):
                 self.lineResultado.setText(resultado_str)
             elif hasattr(self, 'txtResultado'):
                 self.txtResultado.setText(resultado_str)
 
+            # Escribir en Normalizado
+            if hasattr(self, 'lineNormalizado'):
+                self.lineNormalizado.setText(pfn_str)
+            elif hasattr(self, 'txtNormalizado'):
+                self.txtNormalizado.setText(pfn_str)
+
         except Exception as e:
-            print("Error durante la conversión:", e)
+            print("Error durante el cálculo:", e)
             self.frameAlerta.setVisible(True)
 
 if __name__ == "__main__":
