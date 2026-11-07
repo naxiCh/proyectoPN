@@ -1,0 +1,1637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>862</width>
+    <height>415</height>
+   </rect>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <italic>true</italic>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>LABERY</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="applications-graphics">
+    <normaloff>.designer/backup</normaloff>.designer/backup</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* ==========================================================================
+   VENTANA PRINCIPAL
+   ========================================================================== */
+QMainWindow, QWidget#centralwidget {
+    background-color: #FFFFFF;
+    font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   BARRA LATERAL IZQUIERDA (&gt; Labery)
+   ========================================================================== */
+QWidget#sidebar {
+    background-color: #F1F2F4;
+    border-right: 1px solid #E2E4E8;
+    min-width: 140px;
+    max-width: 150px;
+}
+
+QWidget#sidebar QLabel {
+    color: #2D3142;
+    font-size: 16px;
+    font-weight: 700;
+    padding-top: 25px;
+    padding-left: 18px;
+}
+
+/* ==========================================================================
+   PESTAÑAS SUPERIORES (Cápsula ovalada idéntica a Figma)
+   ========================================================================== */
+QTabWidget::pane {
+    border: none;
+    background-color: #FFFFFF;
+    /* Separación extra entre la línea de pestañas y el contenido de abajo */
+    margin-top: 15px; 
+}
+
+QTabWidget::tab-bar {
+    left: 10px;
+    alignment: center;
+}
+
+/* Pestañas inactivas: texto plano con respiración lateral */
+QTabBar::tab {
+    background: transparent;
+    color: #4A4E69;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 24px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 17px;
+    min-height: 18px;
+}
+
+/* Pestaña activa: Cápsula sólida violeta redondeada */
+QTabBar::tab:selected {
+    background-color: #4D4566;
+    color: #FFFFFF;
+    font-weight: 600;
+    border-radius: 17px;
+}
+
+QTabBar::tab:hover:!selected {
+    background-color: #F4F4F6;
+    color: #22223B;
+}
+
+/* ==========================================================================
+   ETIQUETAS GENERALES
+   ========================================================================== */
+QLabel {
+    color: #2B2D42;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+/* ==========================================================================
+   SELECTORES DESPLEGABLES (Base origen, Base destino, Precisión)
+   ========================================================================== */
+QComboBox, QSpinBox {
+    background-color: #E2E4E8;
+    color: #22223B;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px 6px 12px;
+    font-size: 12px;
+    min-height: 22px;
+    min-width: 75px;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+    width: 22px;
+    border: none;
+}
+
+QComboBox::down-arrow {
+    image: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #4A4E69;
+    margin-right: 6px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #FFFFFF;
+    border: 1px solid #D0D5DD;
+    selection-background-color: #4D4566;
+    selection-color: #FFFFFF;
+    border-radius: 6px;
+    padding: 4px;
+    outline: none;
+}
+
+/* ==========================================================================
+   CAMPO DE TEXTO DEL NÚMERO A CONVERTIR
+   ========================================================================== */
+QLineEdit#lineNumero, QLineEdit#lineRedondeo, QLineEdit#lineTruncamiento {
+    background-color: #E2E4E8;
+    color: #22223B;
+    border: 1px solid #D8DCE0;
+    border-radius: 6px;
+    padding: 1px 5px;        /* Reduce el padding vertical a 2px */
+    font-size: 13px;
+    min-height: 5px;         /* Garantiza espacio vertical suficiente */
+}
+
+QLineEdit:focus {
+    background-color: #FFFFFF;
+    border: 1.5px solid #4D4566;
+}
+
+/* ==========================================================================
+   BOTÓN CONVERTIR / CALCULAR
+   ========================================================================== */
+QPushButton#btnCalcular, QPushButton {
+    background-color: #FFFFFF;
+    color: #22223B;
+    border: 1.5px solid #DCDFE4;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+QPushButton:hover {
+    background-color: #F8F9FA;
+    border-color: #B0B5BD;
+}
+
+QPushButton:pressed {
+    background-color: #ECEFF1;
+}
+
+/* ==========================================================================
+   BOTONES DE COPIAR RESULTADO (📋)
+   ========================================================================== */
+QToolButton {
+    background-color: transparent;
+    border: 1px solid #DCDFE4;
+    border-radius: 6px;
+    padding: 5px 8px;
+    color: #4A4E69;
+    font-size: 12px;
+}
+
+QToolButton:hover {
+    background-color: #F0F1F5;
+    border-color: #B0B5BD;
+}
+
+/* ==========================================================================
+   TARJETA ROJA DE ADVERTENCIA
+   ========================================================================== */
+QFrame#frameAlerta {
+    background-color: #FFFFFF;
+    border: 1.5px solid #EF4444;
+    border-radius: 10px;
+    padding: 10px 14px;
+    max-width: 320px;
+    margin-right: 10px;
+}
+
+QFrame#frameAlerta QLabel {
+    color: #1F2937;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+QTabBar::tab:first {
+    margin-left: 125px; /* Subí este número (ej: 80px, 120px) para moverlas más al medio */
+}
+
+/* ==========================================================================
+   PESTAÑA: CÁLCULO DE MALLA (tab_2 / malla)
+   ========================================================================== */
+QWidget#malla {
+    background-color: #FFFFFF;
+}
+
+/* Contenedores interiores transparentes */
+QWidget#franjaMalla, QWidget#franjaBotones, QWidget#franjaResultados_2 {
+    background-color: transparent;
+}
+
+/* Tarjeta explicativa teórica (B, t, L, U) */
+QFrame#frmAclaraciones {
+    background-color: #FAFAFB;
+    border: 1px solid #DCE0E5;
+    border-radius: 8px;
+}
+
+QLabel#lblAclaraciones {
+    color: #4A4E69;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 14px;
+}
+
+/* Títulos de sección */
+QLabel#lblParametros, QLabel#lblARepresentar, QLabel#lblRedondeo, QLabel#lblTruncamiento {
+    color: #22223B;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   LAS 4 TARJETAS / BOTONES DE MÉTRICAS (menor, mayor, cant, distancia)
+   ========================================================================== */
+QPushButton#btnMenor, QPushButton#btnMayor, QPushButton#btnNumero, QPushButton#btnDistancia {
+    background-color: #E2E4E8;
+    color: #4A4E69;
+    font-size: 11px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    padding: 6px 8px;
+    text-align: center;
+}
+
+QPushButton#btnMenor:hover, QPushButton#btnMayor:hover, 
+QPushButton#btnNumero:hover, QPushButton#btnDistancia:hover {
+    background-color: #D4D8DE;
+    color: #22223B;
+}
+
+/* ==========================================================================
+   CAMPOS DE TEXTO Y BOTÓN REPRESENTAR
+   ========================================================================== */
+QLineEdit#lineNumero, QLineEdit#lineRedondeo, QLineEdit#lineTruncamiento {
+    background-color: #E2E4E8;
+    color: #22223B;
+    border: 1px solid #D8DCE0;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+/* Campos de resultados como sólo lectura en gris claro */
+QLineEdit#lineRedondeo:read-only, QLineEdit#lineTruncamiento:read-only {
+    background-color: #ECECF0;
+    color: #4D4566;
+    font-weight: 600;
+}
+
+QPushButton#btnRepresentar {
+    background-color: #FFFFFF;
+    color: #22223B;
+    border: 1.5px solid #DCDFE4;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+QPushButton#btnRepresentar:hover {
+    background-color: #F8F9FA;
+    border-color: #B0B5BD;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="sidebar" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>151</width>
+        <height>3000</height>
+       </size>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>9</y>
+         <width>92</width>
+         <height>43</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>2000</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&gt; Labery</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="contenidoPrincipal" native="true">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>360</height>
+       </size>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QTabWidget" name="pestanias">
+         <property name="styleSheet">
+          <string notr="true">/* ==========================================================================
+   VENTANA PRINCIPAL
+   ========================================================================== */
+QMainWindow, QWidget#centralwidget {
+    background-color: #FFFFFF;
+    font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
+}
+
+/* ==========================================================================
+   BARRA LATERAL IZQUIERDA (&gt; Labery)
+   ========================================================================== */
+QWidget#sidebar {
+    background-color: #F0F1F3;
+    border-right: 1px solid #E2E4E8;
+    min-width: 140px;
+    max-width: 150px;
+}
+
+QWidget#sidebar QLabel {
+    color: #2D3142;
+    font-size: 16px;
+    font-weight: 700;
+    padding-top: 25px;
+    padding-left: 18px;
+}
+
+/* ==========================================================================
+   PESTAÑAS SUPERIORES (Cápsula activa + texto plano)
+   ========================================================================== */
+QTabWidget::pane {
+    border: none;
+    background-color: #FFFFFF;
+}
+
+QTabWidget::tab-bar {
+    left: 0px;
+    alignment: center;
+}
+
+QTabBar::tab {
+    background: transparent;
+    color: #4A4E69;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 22px;
+    margin-right: 14px;
+    border: none;
+    border-radius: 16px;
+}
+
+/* Píldora activa idéntica a Figma */
+QTabBar::tab:selected {
+    background-color: #4D4566;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+QTabBar::tab:hover:!selected {
+    background-color: #F4F4F6;
+    color: #22223B;
+}
+
+/* ==========================================================================
+   ETIQUETAS GENERALES
+   ========================================================================== */
+QLabel {
+    color: #2B2D42;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   SELECTORES DESPLEGABLES (Bases y Precisión)
+   ========================================================================== */
+QComboBox, QSpinBox {
+    background-color: #E2E4E8;
+    color: #22223B;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px 6px 12px;
+    font-size: 12px;
+    min-height: 22px;
+    min-width: 70px;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+    width: 22px;
+    border: none;
+}
+
+QComboBox::down-arrow {
+    image: none;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #4A4E69;
+    margin-right: 6px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #FFFFFF;
+    border: 1px solid #D0D5DD;
+    selection-background-color: #4D4566;
+    selection-color: #FFFFFF;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+/* ==========================================================================
+   CAMPO DE TEXTO DEL NÚMERO
+   ========================================================================== */
+QLineEdit#txtNumero, QLineEdit {
+    background-color: #E2E4E8;
+    color: #22223B;
+    border: 1px solid #D8DCE0;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+}
+
+QLineEdit:focus {
+    background-color: #FFFFFF;
+    border: 1.5px solid #4D4566;
+}
+
+/* ==========================================================================
+   BOTÓN CALCULAR (Acolchonado y sin texto recortado)
+   ========================================================================== */
+QPushButton#btnCalcular, QPushButton {
+    background-color: #FFFFFF;
+    color: #22223B;
+    border: 1px solid #DCDFE4;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    padding: 10px 24px;
+    min-height: 20px;
+    min-width: 90px;
+}
+
+QPushButton:hover {
+    background-color: #F8F9FA;
+    border-color: #C0C4CC;
+}
+
+QPushButton:pressed {
+    background-color: #E9ECEF;
+}
+
+/* ==========================================================================
+   BOTONES DE COPIAR RESULTADOS (ToolButtons)
+   ========================================================================== */
+QToolButton {
+    background-color: transparent;
+    border: 1px solid #DCDFE4;
+    border-radius: 4px;
+    padding: 4px 6px;
+    color: #4A4E69;
+}
+
+QToolButton:hover {
+    background-color: #F0F1F5;
+}
+
+/* ==========================================================================
+   TARJETA ROJA DE ALERTA
+   ========================================================================== */
+QFrame#frameAlerta {
+    background-color: #FFFFFF;
+    border: 1.5px solid #EF4444;
+    border-radius: 10px;
+    padding: 12px 16px;
+    max-width: 320px;
+}
+
+QFrame#frameAlerta QLabel {
+    color: #1F2937;
+    font-size: 12px;
+    font-weight: 500;
+}</string>
+         </property>
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Conversor de Base</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="QWidget" name="franjaSuperior" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>1000</width>
+               <height>125</height>
+              </size>
+             </property>
+             <property name="sizeIncrement">
+              <size>
+               <width>0</width>
+               <height>90</height>
+              </size>
+             </property>
+             <widget class="QComboBox" name="comboBaseOrigen">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>40</y>
+                <width>96</width>
+                <height>34</height>
+               </rect>
+              </property>
+              <item>
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>3</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>4</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>6</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>7</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>8</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>9</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>A</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>B</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>C</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>D</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>E</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>F</string>
+               </property>
+              </item>
+             </widget>
+             <widget class="QComboBox" name="comboBaseDestino">
+              <property name="geometry">
+               <rect>
+                <x>150</x>
+                <y>40</y>
+                <width>96</width>
+                <height>34</height>
+               </rect>
+              </property>
+              <item>
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>3</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>4</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>6</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>7</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>8</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>9</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>A</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>B</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>C</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>D</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>E</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>F</string>
+               </property>
+              </item>
+             </widget>
+             <widget class="QLabel" name="lblBaseOrigen">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>20</y>
+                <width>81</width>
+                <height>20</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Base origen</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="lblBaseDestino">
+              <property name="geometry">
+               <rect>
+                <x>150</x>
+                <y>20</y>
+                <width>91</width>
+                <height>20</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Base destino</string>
+              </property>
+             </widget>
+             <widget class="QFrame" name="frameAlerta">
+              <property name="geometry">
+               <rect>
+                <x>369</x>
+                <y>0</y>
+                <width>320</width>
+                <height>81</height>
+               </rect>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>366</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <widget class="QLabel" name="lblAlertaError">
+               <property name="geometry">
+                <rect>
+                 <x>84</x>
+                 <y>9</y>
+                 <width>170</width>
+                 <height>61</height>
+                </rect>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                 <horstretch>16</horstretch>
+                 <verstretch>7</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>5</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>170</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Atencion! La base origen NO coincide con los datos ingresados</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+               <property name="indent">
+                <number>0</number>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QComboBox" name="comboPrecision">
+              <property name="geometry">
+               <rect>
+                <x>260</x>
+                <y>40</y>
+                <width>96</width>
+                <height>34</height>
+               </rect>
+              </property>
+              <item>
+               <property name="text">
+                <string>1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>2</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>3</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>4</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>6</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>7</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>8</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>9</string>
+               </property>
+              </item>
+             </widget>
+             <widget class="QLabel" name="lblPrecision">
+              <property name="geometry">
+               <rect>
+                <x>270</x>
+                <y>16</y>
+                <width>81</width>
+                <height>31</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Precisión</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QWidget" name="franjaEntrada" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLineEdit" name="txtNumero">
+                <property name="maximumSize">
+                 <size>
+                  <width>500</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="maxLength">
+                 <number>500</number>
+                </property>
+                <property name="placeholderText">
+                 <string>Ingrese el número a convertir...</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnCalcular">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>140</width>
+                  <height>42</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="sizeIncrement">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>CONVERTIR</string>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>32</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="shortcut">
+                 <string/>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QWidget" name="franjaResultados" native="true">
+                <layout class="QGridLayout" name="gridLayout_2">
+                 <item row="1" column="3">
+                  <widget class="QLineEdit" name="txtNormalizado">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="txtResultado">
+                   <property name="readOnly">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QLabel" name="lblNormalizado">
+                   <property name="text">
+                    <string>Normalizado</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="lblResultado">
+                   <property name="text">
+                    <string>Resultado</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="4">
+                  <widget class="QToolButton" name="btnCopiarNormalizado">
+                   <property name="text">
+                    <string>⧉</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QToolButton" name="btnCopiarResultado">
+                   <property name="text">
+                    <string>⧉</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Ignored</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="malla">
+          <attribute name="title">
+           <string>Calculo de malla</string>
+          </attribute>
+          <widget class="QWidget" name="franjaMalla" native="true">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>-10</y>
+             <width>691</width>
+             <height>131</height>
+            </rect>
+           </property>
+           <widget class="QFrame" name="frmAclaraciones">
+            <property name="geometry">
+             <rect>
+              <x>450</x>
+              <y>10</y>
+              <width>211</width>
+              <height>121</height>
+             </rect>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <widget class="QLabel" name="lblAclaraciones">
+             <property name="geometry">
+              <rect>
+               <x>30</x>
+               <y>0</y>
+               <width>150</width>
+               <height>121</height>
+              </rect>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="acceptDrops">
+              <bool>false</bool>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>B = Base
+T = dígitos de precisión
+L = Exponente mínimo 
+U = Exponente máximo</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QLabel" name="lblParametros">
+            <property name="geometry">
+             <rect>
+              <x>140</x>
+              <y>20</y>
+              <width>181</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Parámetros de la malla</string>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="comboB">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>50</y>
+              <width>96</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <item>
+             <property name="text">
+              <string>2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>6</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>7</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>8</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>9</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>10</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>11</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>12</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>13</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>14</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>15</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>16</string>
+             </property>
+            </item>
+           </widget>
+           <widget class="QComboBox" name="comboT">
+            <property name="geometry">
+             <rect>
+              <x>110</x>
+              <y>50</y>
+              <width>96</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <item>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>6</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>7</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>8</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>9</string>
+             </property>
+            </item>
+           </widget>
+           <widget class="QLineEdit" name="lineL">
+            <property name="geometry">
+             <rect>
+              <x>210</x>
+              <y>50</y>
+              <width>91</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="placeholderText">
+             <string>L</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineU">
+            <property name="geometry">
+             <rect>
+              <x>310</x>
+              <y>50</y>
+              <width>91</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>U</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="franjaBotones" native="true">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>120</y>
+             <width>691</width>
+             <height>91</height>
+            </rect>
+           </property>
+           <widget class="QPushButton" name="btnMenor">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>11</y>
+              <width>140</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>menor
+representante</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btnMayor">
+            <property name="geometry">
+             <rect>
+              <x>190</x>
+              <y>11</y>
+              <width>140</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>mayor
+representante</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btnNumero">
+            <property name="geometry">
+             <rect>
+              <x>340</x>
+              <y>11</y>
+              <width>140</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>números
+representables</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btnDistancia">
+            <property name="geometry">
+             <rect>
+              <x>490</x>
+              <y>11</y>
+              <width>140</width>
+              <height>61</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>distancia entre
+representantes</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="franjaResultados_2" native="true">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>200</y>
+             <width>691</width>
+             <height>131</height>
+            </rect>
+           </property>
+           <widget class="QPushButton" name="btnRepresentar">
+            <property name="geometry">
+             <rect>
+              <x>110</x>
+              <y>69</y>
+              <width>140</width>
+              <height>42</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Representar</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblARepresentar">
+            <property name="geometry">
+             <rect>
+              <x>120</x>
+              <y>10</y>
+              <width>201</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Número a representar:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineNumero">
+            <property name="geometry">
+             <rect>
+              <x>72</x>
+              <y>25</y>
+              <width>221</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineRedondeo">
+            <property name="geometry">
+             <rect>
+              <x>450</x>
+              <y>20</y>
+              <width>181</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineTruncamiento">
+            <property name="geometry">
+             <rect>
+              <x>450</x>
+              <y>70</y>
+              <width>181</width>
+              <height>41</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblRedondeo">
+            <property name="geometry">
+             <rect>
+              <x>322</x>
+              <y>32</y>
+              <width>141</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Redondeo Simétrico:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblTruncamiento">
+            <property name="geometry">
+             <rect>
+              <x>323</x>
+              <y>83</y>
+              <width>141</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Truncamiento:</string>
+            </property>
+           </widget>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="tab_3">
+          <attribute name="title">
+           <string>Calculadora</string>
+          </attribute>
+          <widget class="QWidget" name="widget" native="true">
+           <property name="geometry">
+            <rect>
+             <x>9</x>
+             <y>9</y>
+             <width>701</width>
+             <height>81</height>
+            </rect>
+           </property>
+           <widget class="QWidget" name="widget_2" native="true">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>701</width>
+              <height>80</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="widget_3" native="true">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>100</y>
+             <width>601</width>
+             <height>80</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
