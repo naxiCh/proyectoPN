@@ -47,17 +47,27 @@ class VentanaConversor(QtWidgets.QMainWindow):
         self.comboBaseDestino.setCurrentText("2")
 
     def aplicar_sombras(self):
-        elementos = [
-            (self.btnCalcular, 14, 3, 35),
-            (self.frameAlerta, 16, 4, 30),
-            (self.txtNumero, 12, 2, 25),
+        """Aplica sombras difuminadas suaves con el tono #1D3557 de la paleta."""
+        elementos_con_sombra = [
+            # Tarjetas laterales y alertas
+            "frameAlerta", "frmAclaraciones", "frameCalculadora",
+            # Botones principales
+            "btnCalcular", "btnRepresentar", "btnCalcularC",
+            # Botones de métricas de malla
+            "btnMenor", "btnMayor", "btnNumero", "btnDistancia",
+            # Botones de operaciones
+            "btnSumar", "btnRestar", "btnMultiplicar", "btnDividir"
         ]
-        for widget, radio, dy, alpha in elementos:
-            sombra = QGraphicsDropShadowEffect(widget)
-            sombra.setBlurRadius(radio)
-            sombra.setOffset(0, dy)
-            sombra.setColor(QColor(0, 0, 0, alpha))
-            widget.setGraphicsEffect(sombra)
+
+        for nombre in elementos_con_sombra:
+            widget = getattr(self, nombre, None)
+            if widget:
+                sombra = QGraphicsDropShadowEffect(self)
+                sombra.setBlurRadius(16)
+                sombra.setOffset(0, 4)
+                # Azul marino #1D3557 con transparencia (alpha = 45 de 255)
+                sombra.setColor(QColor(29, 53, 87, 45))
+                widget.setGraphicsEffect(sombra)
 
     def validar_entrada(self):
         base = int(self.comboBaseOrigen.currentText())

@@ -112,29 +112,34 @@
   </property>
   <property name="windowIcon">
    <iconset theme="applications-graphics">
-    <normaloff>.designer/backup</normaloff>.designer/backup</iconset>
+    <normaloff>../.designer/backup/.designer/backup</normaloff>../.designer/backup/.designer/backup</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">/* ==========================================================================
-   VENTANA PRINCIPAL
+   1. VENTANA PRINCIPAL
    ========================================================================== */
 QMainWindow, QWidget#centralwidget {
     background-color: #FFFFFF;
     font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
 }
 
+QWidget#franjaMalla, QWidget#franjaBotones, QWidget#franjaResultados_2,
+QWidget#franjaSuperiorC, QWidget#franjaMediaC, QWidget#franjaInferiorC,
+QWidget#malla, QWidget#tab_3, QWidget#tab {
+    background-color: transparent;
+}
+
 /* ==========================================================================
-   BARRA LATERAL IZQUIERDA (&gt; Labery)
+   2. BARRA LATERAL IZQUIERDA (&gt; Labery)
    ========================================================================== */
 QWidget#sidebar {
-    background-color: #F1F2F4;
-    border-right: 1px solid #E2E4E8;
-    min-width: 140px;
-    max-width: 150px;
+    background-color: #F1FAEE;
+    border-right: 1.5px solid #A8DADC;
+    min-width: 145px; /* Evita que el layout principal aplaste la barra */
 }
 
 QWidget#sidebar QLabel {
-    color: #2D3142;
+    color: #1D3557;
     font-size: 16px;
     font-weight: 700;
     padding-top: 25px;
@@ -142,74 +147,78 @@ QWidget#sidebar QLabel {
 }
 
 /* ==========================================================================
-   PESTAÑAS SUPERIORES (Cápsula ovalada idéntica a Figma)
+   3. PESTAÑAS SUPERIORES (Cápsula ovalada recuperada)
    ========================================================================== */
 QTabWidget::pane {
     border: none;
     background-color: #FFFFFF;
-    /* Separación extra entre la línea de pestañas y el contenido de abajo */
-    margin-top: 15px; 
+    margin-top: 12px;
 }
 
 QTabWidget::tab-bar {
-    left: 10px;
     alignment: center;
 }
 
-/* Pestañas inactivas: texto plano con respiración lateral */
 QTabBar::tab {
     background: transparent;
-    color: #4A4E69;
+    color: #457B9D;
     font-size: 13px;
-    font-weight: 500;
-    padding: 8px 24px;
+    font-weight: 600;
+    padding: 8px 22px;
     margin-right: 8px;
     border: none;
-    border-radius: 17px;
-    min-height: 18px;
+    border-radius: 15px;
+    min-height: 18px; /* Necesario para que Qt no dibuje un rectángulo */
 }
 
-/* Pestaña activa: Cápsula sólida violeta redondeada */
 QTabBar::tab:selected {
-    background-color: #4D4566;
-    color: #FFFFFF;
-    font-weight: 600;
-    border-radius: 17px;
+    background-color: #1D3557;
+    color: #F1FAEE;
+    font-weight: 700;
+    border-radius: 15px;
 }
 
 QTabBar::tab:hover:!selected {
-    background-color: #F4F4F6;
-    color: #22223B;
+    background-color: #F1FAEE;
+    color: #1D3557;
+}
+
+QTabBar::tab:first {
+    margin-left: 125px;
 }
 
 /* ==========================================================================
-   ETIQUETAS GENERALES
+   4. ETIQUETAS GENERALES
    ========================================================================== */
 QLabel {
-    color: #2B2D42;
+    color: #1D3557;
     font-size: 12px;
-    font-weight: 500;
-    margin-bottom: 4px;
+    font-weight: 600;
 }
 
 /* ==========================================================================
-   SELECTORES DESPLEGABLES (Base origen, Base destino, Precisión)
+   5. SELECTORES DESPLEGABLES (QComboBox) - Sin bloqueos de tamaño
    ========================================================================== */
 QComboBox, QSpinBox {
-    background-color: #E2E4E8;
-    color: #22223B;
-    border: none;
+    background-color: #F1FAEE;
+    color: #1D3557;
+    border: 1px solid #A8DADC;
+    border-bottom: 2px solid #457B9D;
     border-radius: 6px;
-    padding: 6px 14px 6px 12px;
+    padding: 2px 10px;
     font-size: 12px;
-    min-height: 22px;
-    min-width: 75px;
+    font-weight: 500;
+}
+
+QComboBox:hover {
+    background-color: #FFFFFF;
+    border-color: #457B9D;
 }
 
 QComboBox::drop-down {
     subcontrol-origin: padding;
     subcontrol-position: center right;
-    width: 22px;
+    width: 20px;
     border: none;
 }
 
@@ -217,183 +226,172 @@ QComboBox::down-arrow {
     image: none;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 5px solid #4A4E69;
+    border-top: 5px solid #1D3557;
     margin-right: 6px;
 }
 
 QComboBox QAbstractItemView {
     background-color: #FFFFFF;
-    border: 1px solid #D0D5DD;
-    selection-background-color: #4D4566;
-    selection-color: #FFFFFF;
+    color: #1D3557;
+    border: 1px solid #457B9D;
+    selection-background-color: #1D3557;
+    selection-color: #F1FAEE;
     border-radius: 6px;
     padding: 4px;
     outline: none;
 }
 
 /* ==========================================================================
-   CAMPO DE TEXTO DEL NÚMERO A CONVERTIR
+   6. CAMPOS DE TEXTO (QLineEdit) - Sin bloqueos de tamaño
    ========================================================================== */
-QLineEdit#lineNumero, QLineEdit#lineRedondeo, QLineEdit#lineTruncamiento {
-    background-color: #E2E4E8;
-    color: #22223B;
-    border: 1px solid #D8DCE0;
+QLineEdit {
+    background-color: #F1FAEE;
+    color: #1D3557;
+    border: 1px solid #A8DADC;
+    border-bottom: 2px solid #A8DADC;
     border-radius: 6px;
-    padding: 1px 5px;        /* Reduce el padding vertical a 2px */
-    font-size: 13px;
-    min-height: 5px;         /* Garantiza espacio vertical suficiente */
+    padding: 0px 8px;
+    font-size: 12px;
 }
 
 QLineEdit:focus {
     background-color: #FFFFFF;
-    border: 1.5px solid #4D4566;
+    border: 1.5px solid #457B9D;
+}
+
+QLineEdit#lineL, QLineEdit#lineU {
+    qproperty-alignment: AlignCenter;
+}
+
+QLineEdit:read-only,
+QLineEdit#lineRedondeo:read-only, 
+QLineEdit#lineTruncamiento:read-only,
+QLineEdit#lineResultadoC:read-only,
+QLineEdit#lineAbsoluto:read-only,
+QLineEdit#lineRelativo:read-only {
+    background-color: #EBF5F5;
+    color: #1D3557;
+    border: 1px solid #A8DADC;
+    font-weight: 600;
 }
 
 /* ==========================================================================
-   BOTÓN CONVERTIR / CALCULAR
+   7. BOTONES DE ACCIÓN PRINCIPALES - Sin bloqueos de tamaño
    ========================================================================== */
-QPushButton#btnCalcular, QPushButton {
+QPushButton {
     background-color: #FFFFFF;
-    color: #22223B;
-    border: 1.5px solid #DCDFE4;
-    border-radius: 14px;
+    color: #1D3557;
+    border: 1.5px solid #457B9D;
+    border-bottom: 3px solid #1D3557;
+    border-radius: 12px;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
 }
 
 QPushButton:hover {
-    background-color: #F8F9FA;
-    border-color: #B0B5BD;
+    background-color: #457B9D;
+    color: #F1FAEE;
+    border-color: #1D3557;
 }
 
 QPushButton:pressed {
-    background-color: #ECEFF1;
+    background-color: #1D3557;
+    color: #F1FAEE;
+    border-bottom: 1.5px solid #1D3557;
 }
 
 /* ==========================================================================
-   BOTONES DE COPIAR RESULTADO (📋)
+   8. BOTONES DE MÉTRICAS DE MALLA (Pestaña 2)
    ========================================================================== */
-QToolButton {
-    background-color: transparent;
-    border: 1px solid #DCDFE4;
-    border-radius: 6px;
-    padding: 5px 8px;
-    color: #4A4E69;
-    font-size: 12px;
-}
-
-QToolButton:hover {
-    background-color: #F0F1F5;
-    border-color: #B0B5BD;
-}
-
-/* ==========================================================================
-   TARJETA ROJA DE ADVERTENCIA
-   ========================================================================== */
-QFrame#frameAlerta {
-    background-color: #FFFFFF;
-    border: 1.5px solid #EF4444;
-    border-radius: 10px;
-    padding: 10px 14px;
-    max-width: 320px;
-    margin-right: 10px;
-}
-
-QFrame#frameAlerta QLabel {
-    color: #1F2937;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-QTabBar::tab:first {
-    margin-left: 125px; /* Subí este número (ej: 80px, 120px) para moverlas más al medio */
-}
-
-/* ==========================================================================
-   PESTAÑA: CÁLCULO DE MALLA (tab_2 / malla)
-   ========================================================================== */
-QWidget#malla {
-    background-color: #FFFFFF;
-}
-
-/* Contenedores interiores transparentes */
-QWidget#franjaMalla, QWidget#franjaBotones, QWidget#franjaResultados_2 {
-    background-color: transparent;
-}
-
-/* Tarjeta explicativa teórica (B, t, L, U) */
-QFrame#frmAclaraciones {
-    background-color: #FAFAFB;
-    border: 1px solid #DCE0E5;
-    border-radius: 8px;
-}
-
-QLabel#lblAclaraciones {
-    color: #4A4E69;
-    font-size: 11px;
-    font-weight: 500;
-    line-height: 14px;
-}
-
-/* Títulos de sección */
-QLabel#lblParametros, QLabel#lblARepresentar, QLabel#lblRedondeo, QLabel#lblTruncamiento {
-    color: #22223B;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-/* ==========================================================================
-   LAS 4 TARJETAS / BOTONES DE MÉTRICAS (menor, mayor, cant, distancia)
-   ========================================================================== */
-QPushButton#btnMenor, QPushButton#btnMayor, QPushButton#btnNumero, QPushButton#btnDistancia {
-    background-color: #E2E4E8;
-    color: #4A4E69;
+QPushButton#btnMenor, QPushButton#btnMayor, 
+QPushButton#btnNumero, QPushButton#btnDistancia {
+    background-color: #A8DADC;
+    color: #1D3557;
     font-size: 11px;
     font-weight: 600;
-    border: none;
+    border: 1px solid #89C2C5;
+    border-bottom: 3px solid #457B9D;
     border-radius: 12px;
-    padding: 6px 8px;
+    padding: 2px 4px;
     text-align: center;
 }
 
 QPushButton#btnMenor:hover, QPushButton#btnMayor:hover, 
 QPushButton#btnNumero:hover, QPushButton#btnDistancia:hover {
-    background-color: #D4D8DE;
-    color: #22223B;
+    background-color: #457B9D;
+    color: #F1FAEE;
+    border-color: #1D3557;
 }
 
 /* ==========================================================================
-   CAMPOS DE TEXTO Y BOTÓN REPRESENTAR
+   9. TARJETAS INFORMATIVAS Y DE ALERTA
    ========================================================================== */
-QLineEdit#lineNumero, QLineEdit#lineRedondeo, QLineEdit#lineTruncamiento {
-    background-color: #E2E4E8;
-    color: #22223B;
-    border: 1px solid #D8DCE0;
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 12px;
+QFrame#frmAclaraciones, QFrame#frameCalculadora {
+    background-color: #F1FAEE;
+    border: 1px solid #A8DADC;
+    border-bottom: 3px solid #457B9D;
+    border-radius: 10px;
 }
 
-/* Campos de resultados como sólo lectura en gris claro */
-QLineEdit#lineRedondeo:read-only, QLineEdit#lineTruncamiento:read-only {
-    background-color: #ECECF0;
-    color: #4D4566;
+QLabel#lblAclaraciones, QLabel#lblFrameC {
+    color: #1D3557;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+QFrame#frameAlerta {
+    background-color: #FFF5F5;
+    border: 1.5px solid #E63946;
+    border-bottom: 3px solid #E63946;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+QFrame#frameAlerta QLabel {
+    color: #E63946;
+    font-size: 11px;
     font-weight: 600;
 }
 
-QPushButton#btnRepresentar {
-    background-color: #FFFFFF;
-    color: #22223B;
-    border: 1.5px solid #DCDFE4;
-    border-radius: 12px;
-    font-size: 12px;
-    font-weight: 700;
+/* ==========================================================================
+   10. BOTONES DE OPERACIÓN Y COPIAR (QToolButton)
+   ========================================================================== */
+QToolButton#btnSumar, QToolButton#btnRestar, 
+QToolButton#btnMultiplicar, QToolButton#btnDividir {
+    background-color: #F1FAEE;
+    color: #1D3557;
+    border: 1.5px solid #A8DADC;
+    border-bottom: 3px solid #457B9D;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-QPushButton#btnRepresentar:hover {
-    background-color: #F8F9FA;
-    border-color: #B0B5BD;
+QToolButton#btnSumar:hover, QToolButton#btnRestar:hover, 
+QToolButton#btnMultiplicar:hover, QToolButton#btnDividir:hover {
+    background-color: #A8DADC;
+    border-color: #1D3557;
+}
+
+QToolButton#btnSumar:checked, QToolButton#btnRestar:checked, 
+QToolButton#btnMultiplicar:checked, QToolButton#btnDividir:checked {
+    background-color: #1D3557;
+    color: #F1FAEE;
+    border-color: #1D3557;
+}
+
+QToolButton:!checked {
+    background-color: #F1FAEE;
+    border: 1px solid #A8DADC;
+    border-radius: 6px;
+    color: #1D3557;
+}
+
+QToolButton:!checked:hover {
+    background-color: #A8DADC;
+    border-color: #457B9D;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -417,7 +415,7 @@ QPushButton#btnRepresentar:hover {
       </property>
       <property name="maximumSize">
        <size>
-        <width>151</width>
+        <width>16777215</width>
         <height>3000</height>
        </size>
       </property>
@@ -477,198 +475,95 @@ QPushButton#btnRepresentar:hover {
        </property>
        <item row="0" column="0">
         <widget class="QTabWidget" name="pestanias">
-         <property name="styleSheet">
-          <string notr="true">/* ==========================================================================
-   VENTANA PRINCIPAL
-   ========================================================================== */
-QMainWindow, QWidget#centralwidget {
-    background-color: #FFFFFF;
-    font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
-}
-
-/* ==========================================================================
-   BARRA LATERAL IZQUIERDA (&gt; Labery)
-   ========================================================================== */
-QWidget#sidebar {
-    background-color: #F0F1F3;
-    border-right: 1px solid #E2E4E8;
-    min-width: 140px;
-    max-width: 150px;
-}
-
-QWidget#sidebar QLabel {
-    color: #2D3142;
-    font-size: 16px;
-    font-weight: 700;
-    padding-top: 25px;
-    padding-left: 18px;
-}
-
-/* ==========================================================================
-   PESTAÑAS SUPERIORES (Cápsula activa + texto plano)
-   ========================================================================== */
-QTabWidget::pane {
-    border: none;
-    background-color: #FFFFFF;
-}
-
-QTabWidget::tab-bar {
-    left: 0px;
-    alignment: center;
-}
-
-QTabBar::tab {
-    background: transparent;
-    color: #4A4E69;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 22px;
-    margin-right: 14px;
-    border: none;
-    border-radius: 16px;
-}
-
-/* Píldora activa idéntica a Figma */
-QTabBar::tab:selected {
-    background-color: #4D4566;
-    color: #FFFFFF;
-    font-weight: 600;
-}
-
-QTabBar::tab:hover:!selected {
-    background-color: #F4F4F6;
-    color: #22223B;
-}
-
-/* ==========================================================================
-   ETIQUETAS GENERALES
-   ========================================================================== */
-QLabel {
-    color: #2B2D42;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-/* ==========================================================================
-   SELECTORES DESPLEGABLES (Bases y Precisión)
-   ========================================================================== */
-QComboBox, QSpinBox {
-    background-color: #E2E4E8;
-    color: #22223B;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 14px 6px 12px;
-    font-size: 12px;
-    min-height: 22px;
-    min-width: 70px;
-}
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: center right;
-    width: 22px;
-    border: none;
-}
-
-QComboBox::down-arrow {
-    image: none;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-top: 5px solid #4A4E69;
-    margin-right: 6px;
-}
-
-QComboBox QAbstractItemView {
-    background-color: #FFFFFF;
-    border: 1px solid #D0D5DD;
-    selection-background-color: #4D4566;
-    selection-color: #FFFFFF;
-    border-radius: 6px;
-    padding: 4px;
-}
-
-/* ==========================================================================
-   CAMPO DE TEXTO DEL NÚMERO
-   ========================================================================== */
-QLineEdit#txtNumero, QLineEdit {
-    background-color: #E2E4E8;
-    color: #22223B;
-    border: 1px solid #D8DCE0;
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 13px;
-}
-
-QLineEdit:focus {
-    background-color: #FFFFFF;
-    border: 1.5px solid #4D4566;
-}
-
-/* ==========================================================================
-   BOTÓN CALCULAR (Acolchonado y sin texto recortado)
-   ========================================================================== */
-QPushButton#btnCalcular, QPushButton {
-    background-color: #FFFFFF;
-    color: #22223B;
-    border: 1px solid #DCDFE4;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    padding: 10px 24px;
-    min-height: 20px;
-    min-width: 90px;
-}
-
-QPushButton:hover {
-    background-color: #F8F9FA;
-    border-color: #C0C4CC;
-}
-
-QPushButton:pressed {
-    background-color: #E9ECEF;
-}
-
-/* ==========================================================================
-   BOTONES DE COPIAR RESULTADOS (ToolButtons)
-   ========================================================================== */
-QToolButton {
-    background-color: transparent;
-    border: 1px solid #DCDFE4;
-    border-radius: 4px;
-    padding: 4px 6px;
-    color: #4A4E69;
-}
-
-QToolButton:hover {
-    background-color: #F0F1F5;
-}
-
-/* ==========================================================================
-   TARJETA ROJA DE ALERTA
-   ========================================================================== */
-QFrame#frameAlerta {
-    background-color: #FFFFFF;
-    border: 1.5px solid #EF4444;
-    border-radius: 10px;
-    padding: 12px 16px;
-    max-width: 320px;
-}
-
-QFrame#frameAlerta QLabel {
-    color: #1F2937;
-    font-size: 12px;
-    font-weight: 500;
-}</string>
-         </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <widget class="QWidget" name="tab">
           <attribute name="title">
            <string>Conversor de Base</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_3">
+           <item row="1" column="0">
+            <widget class="QWidget" name="franjaEntrada" native="true">
+             <widget class="QLineEdit" name="txtNumero">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>20</y>
+                <width>500</width>
+                <height>51</height>
+               </rect>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>500</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="maxLength">
+               <number>500</number>
+              </property>
+              <property name="placeholderText">
+               <string>Ingrese el número a convertir...</string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="btnCalcular">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="geometry">
+               <rect>
+                <x>560</x>
+                <y>20</y>
+                <width>100</width>
+                <height>51</height>
+               </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="sizeIncrement">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>CONVERTIR</string>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string/>
+              </property>
+              <property name="checkable">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QWidget" name="franjaSuperior" native="true">
              <property name="sizePolicy">
@@ -700,7 +595,7 @@ QFrame#frameAlerta QLabel {
                <rect>
                 <x>30</x>
                 <y>40</y>
-                <width>96</width>
+                <width>101</width>
                 <height>34</height>
                </rect>
               </property>
@@ -780,7 +675,7 @@ QFrame#frameAlerta QLabel {
                <rect>
                 <x>150</x>
                 <y>40</y>
-                <width>96</width>
+                <width>101</width>
                 <height>34</height>
                </rect>
               </property>
@@ -884,15 +779,15 @@ QFrame#frameAlerta QLabel {
              <widget class="QFrame" name="frameAlerta">
               <property name="geometry">
                <rect>
-                <x>369</x>
+                <x>388</x>
                 <y>0</y>
-                <width>320</width>
-                <height>81</height>
+                <width>281</width>
+                <height>91</height>
                </rect>
               </property>
               <property name="maximumSize">
                <size>
-                <width>366</width>
+                <width>16777215</width>
                 <height>16777215</height>
                </size>
               </property>
@@ -905,10 +800,10 @@ QFrame#frameAlerta QLabel {
               <widget class="QLabel" name="lblAlertaError">
                <property name="geometry">
                 <rect>
-                 <x>84</x>
-                 <y>9</y>
+                 <x>60</x>
+                 <y>0</y>
                  <width>170</width>
-                 <height>61</height>
+                 <height>91</height>
                 </rect>
                </property>
                <property name="sizePolicy">
@@ -951,7 +846,7 @@ QFrame#frameAlerta QLabel {
                <rect>
                 <x>260</x>
                 <y>40</y>
-                <width>96</width>
+                <width>101</width>
                 <height>34</height>
                </rect>
               </property>
@@ -1016,77 +911,6 @@ QFrame#frameAlerta QLabel {
              </widget>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QWidget" name="franjaEntrada" native="true">
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLineEdit" name="txtNumero">
-                <property name="maximumSize">
-                 <size>
-                  <width>500</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="maxLength">
-                 <number>500</number>
-                </property>
-                <property name="placeholderText">
-                 <string>Ingrese el número a convertir...</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="btnCalcular">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>140</width>
-                  <height>42</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="sizeIncrement">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>CONVERTIR</string>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>32</width>
-                  <height>26</height>
-                 </size>
-                </property>
-                <property name="shortcut">
-                 <string/>
-                </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="2" column="0">
             <widget class="QFrame" name="frame">
              <property name="frameShape">
@@ -1095,72 +919,94 @@ QFrame#frameAlerta QLabel {
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QWidget" name="franjaResultados" native="true">
-                <layout class="QGridLayout" name="gridLayout_2">
-                 <item row="1" column="3">
-                  <widget class="QLineEdit" name="txtNormalizado">
-                   <property name="readOnly">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLineEdit" name="txtResultado">
-                   <property name="readOnly">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="3">
-                  <widget class="QLabel" name="lblNormalizado">
-                   <property name="text">
-                    <string>Normalizado</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="lblResultado">
-                   <property name="text">
-                    <string>Resultado</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="4">
-                  <widget class="QToolButton" name="btnCopiarNormalizado">
-                   <property name="text">
-                    <string>⧉</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QToolButton" name="btnCopiarResultado">
-                   <property name="text">
-                    <string>⧉</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <spacer name="horizontalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Ignored</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>0</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-             </layout>
+             <widget class="QWidget" name="franjaResultados" native="true">
+              <property name="geometry">
+               <rect>
+                <x>20</x>
+                <y>10</y>
+                <width>372</width>
+                <height>63</height>
+               </rect>
+              </property>
+              <widget class="QLabel" name="lblResultado">
+               <property name="geometry">
+                <rect>
+                 <x>43</x>
+                 <y>0</y>
+                 <width>57</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Resultado</string>
+               </property>
+              </widget>
+              <widget class="QToolButton" name="btnCopiarResultado">
+               <property name="geometry">
+                <rect>
+                 <x>250</x>
+                 <y>27</y>
+                 <width>41</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>⧉</string>
+               </property>
+              </widget>
+              <widget class="QLineEdit" name="txtResultado">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>20</y>
+                 <width>201</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </widget>
+             <widget class="QToolButton" name="btnCopiarNormalizado">
+              <property name="geometry">
+               <rect>
+                <x>560</x>
+                <y>30</y>
+                <width>41</width>
+                <height>31</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>⧉</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="lblNormalizado">
+              <property name="geometry">
+               <rect>
+                <x>354</x>
+                <y>10</y>
+                <width>72</width>
+                <height>14</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Normalizado</string>
+              </property>
+             </widget>
+             <widget class="QLineEdit" name="txtNormalizado">
+              <property name="geometry">
+               <rect>
+                <x>350</x>
+                <y>30</y>
+                <width>201</width>
+                <height>41</height>
+               </rect>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -1181,7 +1027,7 @@ QFrame#frameAlerta QLabel {
            <widget class="QFrame" name="frmAclaraciones">
             <property name="geometry">
              <rect>
-              <x>450</x>
+              <x>440</x>
               <y>10</y>
               <width>211</width>
               <height>121</height>
@@ -1196,7 +1042,7 @@ QFrame#frameAlerta QLabel {
             <widget class="QLabel" name="lblAclaraciones">
              <property name="geometry">
               <rect>
-               <x>30</x>
+               <x>20</x>
                <y>0</y>
                <width>150</width>
                <height>121</height>
@@ -1243,7 +1089,7 @@ U = Exponente máximo</string>
              <rect>
               <x>10</x>
               <y>50</y>
-              <width>96</width>
+              <width>91</width>
               <height>41</height>
              </rect>
             </property>
@@ -1328,7 +1174,7 @@ U = Exponente máximo</string>
              <rect>
               <x>110</x>
               <y>50</y>
-              <width>96</width>
+              <width>91</width>
               <height>41</height>
              </rect>
             </property>
@@ -1592,35 +1438,344 @@ representantes</string>
           <attribute name="title">
            <string>Calculadora</string>
           </attribute>
-          <widget class="QWidget" name="widget" native="true">
+          <widget class="QWidget" name="franjaMediaC" native="true">
            <property name="geometry">
             <rect>
-             <x>9</x>
-             <y>9</y>
-             <width>701</width>
-             <height>81</height>
+             <x>0</x>
+             <y>109</y>
+             <width>711</width>
+             <height>121</height>
             </rect>
            </property>
-           <widget class="QWidget" name="widget_2" native="true">
+           <widget class="QToolButton" name="btnSumar">
             <property name="geometry">
              <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>701</width>
-              <height>80</height>
+              <x>40</x>
+              <y>20</y>
+              <width>51</width>
+              <height>51</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>-1</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>+</string>
+            </property>
+           </widget>
+           <widget class="QToolButton" name="btnRestar">
+            <property name="geometry">
+             <rect>
+              <x>100</x>
+              <y>20</y>
+              <width>51</width>
+              <height>51</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>-1</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>_
+</string>
+            </property>
+           </widget>
+           <widget class="QToolButton" name="btnMultiplicar">
+            <property name="geometry">
+             <rect>
+              <x>160</x>
+              <y>20</y>
+              <width>51</width>
+              <height>51</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>-1</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>*</string>
+            </property>
+           </widget>
+           <widget class="QToolButton" name="btnDividir">
+            <property name="geometry">
+             <rect>
+              <x>220</x>
+              <y>20</y>
+              <width>51</width>
+              <height>51</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>-1</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>/</string>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="comboBox_2">
+            <property name="geometry">
+             <rect>
+              <x>320</x>
+              <y>28</y>
+              <width>161</width>
+              <height>41</height>
+             </rect>
+            </property>
+            <property name="placeholderText">
+             <string>Seleccionar corte...</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>Truncamiento</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Redondeo Simétrico</string>
+             </property>
+            </item>
+           </widget>
+           <widget class="QLabel" name="lblOperacion">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>1</y>
+              <width>111</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Operación:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblCorte">
+            <property name="geometry">
+             <rect>
+              <x>320</x>
+              <y>4</y>
+              <width>91</width>
+              <height>21</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Tipo de corte:</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="btnCalcularC">
+            <property name="geometry">
+             <rect>
+              <x>520</x>
+              <y>23</y>
+              <width>140</width>
+              <height>42</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>CALCULAR</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="franjaInferiorC" native="true">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>210</y>
+             <width>711</width>
+             <height>101</height>
+            </rect>
+           </property>
+           <widget class="QLineEdit" name="lineResultadoC">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>50</y>
+              <width>241</width>
+              <height>41</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblResultadoC">
+            <property name="geometry">
+             <rect>
+              <x>50</x>
+              <y>30</y>
+              <width>121</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Resultado:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblAbsoluto">
+            <property name="geometry">
+             <rect>
+              <x>340</x>
+              <y>30</y>
+              <width>141</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Error Absoluto:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblRelativo">
+            <property name="geometry">
+             <rect>
+              <x>510</x>
+              <y>30</y>
+              <width>101</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Error Relativo:</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineAbsoluto">
+            <property name="geometry">
+             <rect>
+              <x>340</x>
+              <y>50</y>
+              <width>141</width>
+              <height>41</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineRelativo">
+            <property name="geometry">
+             <rect>
+              <x>510</x>
+              <y>50</y>
+              <width>141</width>
+              <height>41</height>
              </rect>
             </property>
            </widget>
           </widget>
-          <widget class="QWidget" name="widget_3" native="true">
+          <widget class="QWidget" name="franjaSuperiorC" native="true">
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>100</y>
-             <width>601</width>
-             <height>80</height>
+             <y>0</y>
+             <width>711</width>
+             <height>101</height>
             </rect>
            </property>
+           <widget class="QLineEdit" name="lineOperando1">
+            <property name="geometry">
+             <rect>
+              <x>30</x>
+              <y>30</y>
+              <width>131</width>
+              <height>41</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineOperando2">
+            <property name="geometry">
+             <rect>
+              <x>170</x>
+              <y>30</y>
+              <width>131</width>
+              <height>41</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblOperando1">
+            <property name="geometry">
+             <rect>
+              <x>30</x>
+              <y>10</y>
+              <width>101</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Operando 1:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblOperando2">
+            <property name="geometry">
+             <rect>
+              <x>170</x>
+              <y>10</y>
+              <width>111</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Operando 2:</string>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="comboPrecisionC">
+            <property name="geometry">
+             <rect>
+              <x>340</x>
+              <y>31</y>
+              <width>101</width>
+              <height>40</height>
+             </rect>
+            </property>
+           </widget>
+           <widget class="QLabel" name="lblPrecisionC">
+            <property name="geometry">
+             <rect>
+              <x>340</x>
+              <y>10</y>
+              <width>141</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Dígitos de precisión:</string>
+            </property>
+           </widget>
+           <widget class="QFrame" name="frameCalculadora">
+            <property name="geometry">
+             <rect>
+              <x>470</x>
+              <y>0</y>
+              <width>191</width>
+              <height>101</height>
+             </rect>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <widget class="QLabel" name="lblFrameC">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>0</y>
+               <width>171</width>
+               <height>101</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>La operación se realizará con operandos en base decimal, seleccione la operación deseada y el tipo de corte.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </widget>
           </widget>
          </widget>
         </widget>
