@@ -104,7 +104,41 @@ class VentanaConversor(QtWidgets.QMainWindow):
         self.frameAlerta.setVisible(not es_valido)
 
     def ejecutar_calculo(self):
-        print("Botón presionado. Calculando...")
+        # 1. Obtener valores de la interfaz
+        base_origen = int(self.comboBaseOrigen.currentText())
+        base_destino = int(self.comboBaseDestino.currentText())
+        precision_t = int(self.comboPrecision.currentText())
+        texto_numero = self.txtNumero.text().strip()
+
+        # Validar si el campo de texto está vacío
+        if not texto_numero:
+            self.frameAlerta.setVisible(False)
+            return
+
+        try:
+            # 2. Realizar la conversión de base
+            resultado_str = convertir_base(texto_numero, base_origen, base_destino, precision_t)
+            
+            # 3. Calcular el Punto Flotante Normalizado (PFN)
+            pfn_str = normalizar_pfn(resultado_str, base_destino)
+
+            # 4. Mostrar los resultados en la interfaz
+            if hasattr(self, 'lineResultado'):
+                self.lineResultado.setText(resultado_str)
+            elif hasattr(self, 'txtResultado'):
+                self.txtResultado.setText(resultado_str)
+
+            if hasattr(self, 'lineNormalizado'):
+                self.lineNormalizado.setText(pfn_str)
+            elif hasattr(self, 'txtNormalizado'):
+                self.txtNormalizado.setText(pfn_str)
+
+            # Ocultar marco de alerta si el cálculo fue exitoso
+            self.frameAlerta.setVisible(False)
+
+        except Exception as e:
+            print("Error durante el cálculo:", e)
+            self.frameAlerta.setVisible(True)
 
     # ------------------------------------------------------------------
     # PESTAÑA: CÁLCULO DE MALLA
