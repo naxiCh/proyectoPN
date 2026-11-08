@@ -44,7 +44,6 @@ class VentanaConversor(QtWidgets.QMainWindow):
         self.comboB.setPlaceholderText("B")
         self.comboT.setPlaceholderText("t")
 
-
         self.comboB.setCurrentIndex(-1)
         self.comboT.setCurrentIndex(-1)
 
@@ -52,8 +51,6 @@ class VentanaConversor(QtWidgets.QMainWindow):
         self.lineL.setValidator(validador)
         self.lineU.setValidator(validador)
 
-   
-    
     def poblar_bases(self):
         bases = [str(b) for b in range(2, 17)]
         self.comboBaseOrigen.clear()
@@ -66,13 +63,9 @@ class VentanaConversor(QtWidgets.QMainWindow):
     def aplicar_sombras(self):
         """Aplica sombras difuminadas suaves con el tono #1D3557 de la paleta."""
         elementos_con_sombra = [
-            # Tarjetas laterales y alertas
             "frameAlerta", "frmAclaraciones", "frameCalculadora",
-            # Botones principales
             "btnCalcular", "btnRepresentar", "btnCalcularC",
-            # Botones de métricas de malla
             "btnMenor", "btnMayor", "btnNumero", "btnDistancia",
-            # Botones de operaciones
             "btnSumar", "btnRestar", "btnMultiplicar", "btnDividir"
         ]
 
@@ -82,7 +75,6 @@ class VentanaConversor(QtWidgets.QMainWindow):
                 sombra = QGraphicsDropShadowEffect(self)
                 sombra.setBlurRadius(16)
                 sombra.setOffset(0, 4)
-                # Azul marino #1D3557 con transparencia (alpha = 45 de 255)
                 sombra.setColor(QColor(29, 53, 87, 45))
                 widget.setGraphicsEffect(sombra)
 
@@ -103,43 +95,14 @@ class VentanaConversor(QtWidgets.QMainWindow):
         es_valido = all(c in alfabeto for c in "".join(partes))
         self.frameAlerta.setVisible(not es_valido)
 
+    # ------------------------------------------------------------------
+    # PESTAÑA 1: CONVERSOR DE BASES
+    # ------------------------------------------------------------------
     def ejecutar_calculo(self):
-        print("Botón presionado. Calculando...")
-
-    # ------------------------------------------------------------------
-    # PESTAÑA: CÁLCULO DE MALLA
-    # ------------------------------------------------------------------
-    def conectar_eventos_malla(self):
-        self.btnMenor.clicked.connect(self.mostrar_menor)
-        self.btnMayor.clicked.connect(self.mostrar_mayor)
-        self.btnNumero.clicked.connect(self.mostrar_cantidad)
-        self.btnDistancia.clicked.connect(self.mostrar_distancia)
-        self.btnRepresentar.clicked.connect(self.representar_numero)
-        self.lineRedondeo.setReadOnly(True)
-        self.lineTruncamiento.setReadOnly(True)
-
-    def leer_malla(self) -> Malla:
-        """Arma la malla con los datos de la pantalla (lanza ValueError/MallaError)."""
-        if self.comboB.currentIndex() < 0 or self.comboT.currentIndex() < 0:
-            raise ValueError("Elegí la base B y la cantidad de dígitos t.")
-        try:
-            L = int(self.lineL.text())
-            U = int(self.lineU.text())
-        except ValueError:
-            raise ValueError("Ingresá L y U como números enteros.")
-        return Malla(int(self.comboB.currentText()),
-                     int(self.comboT.currentText()), L, U)
-
-    def _ejecutar_malla(self, accion):
-        """Corre `accion(malla)` y muestra cualquier error en un aviso."""
-        try:
-            accion(self.leer_malla())
-        except (ValueError, MallaError) as e:
-            QtWidgets.QMessageBox.warning(self, "Labery", str(e))
         texto_numero = self.txtNumero.text().strip()
         str_origen = self.comboBaseOrigen.currentText()
         str_destino = self.comboBaseDestino.currentText()
-        str_t = self.comboT.currentText()
+        str_t = self.comboPrecision.currentText() if hasattr(self, 'comboPrecision') else self.comboT.currentText()
 
         if not texto_numero:
             self.frameAlerta.setVisible(True)
@@ -157,13 +120,11 @@ class VentanaConversor(QtWidgets.QMainWindow):
             resultado_str = convertir_base(texto_numero, base_origen, base_destino, precision_t)
             pfn_str = normalizar_pfn(resultado_str, base_destino)
 
-            # Escribir en Resultado
             if hasattr(self, 'lineResultado'):
                 self.lineResultado.setText(resultado_str)
             elif hasattr(self, 'txtResultado'):
                 self.txtResultado.setText(resultado_str)
 
-            # Escribir en Normalizado
             if hasattr(self, 'lineNormalizado'):
                 self.lineNormalizado.setText(pfn_str)
             elif hasattr(self, 'txtNormalizado'):
@@ -173,46 +134,175 @@ class VentanaConversor(QtWidgets.QMainWindow):
             print("Error durante el cálculo:", e)
             self.frameAlerta.setVisible(True)
 
-    def _info(self, titulo, texto):
-        QtWidgets.QMessageBox.information(self, titulo, texto)
+    """mallacalc"""
+    def conectar_eventos_malla(self):
+        self.btnMenor.clicked.connect(self.actualizar_info_menor)
+        self.btnMayor.clicked.connect(self.actualizar_info_mayor)
+        self.btnNumero.clicked.connect(self.actualizar_info_cantidad)
+        self.btnDistancia.clicked.connect(self.actualizar_info_distancia)
+        self.btnRepresentar.clicked.connect(self.representar_numero)
+        self.lineRedondeo.setReadOnly(True)
+        self.lineTruncamiento.setReadOnly(True)
 
-    def mostrar_menor(self):
-        def f(m):
-            txt, val = m.menor()
-            self._info("Menor representante",
-                       f"{txt}\n= B^(L-1) = {fraccion_str(val)}\n≈ {a_decimal_str(val)}")
-        self._ejecutar_malla(f)
+    def leer_malla(self) -> Malla:
+        """Arma la malla con los datos de la pantalla (lanza ValueError/MallaError)."""
+        if self.comboB.currentIndex() < 0 or self.comboT.currentIndex() < 0:
+            raise ValueError("Elegí la base B y la cantidad de dígitos t.")
+        try:
+            L = int(self.lineL.text())
+            U = int(self.lineU.text())
+        except ValueError:
+            raise ValueError("Ingresá L y U como números enteros.")
+        return Malla(int(self.comboB.currentText()),
+                     int(self.comboT.currentText()), L, U)
 
-    def mostrar_mayor(self):
-        def f(m):
-            txt, val = m.mayor()
-            self._info("Mayor representante",
-                       f"{txt}\n= (1 - B^-t)·B^U = {fraccion_str(val)}\n≈ {a_decimal_str(val)}")
-        self._ejecutar_malla(f)
+    def obtener_parametros_malla(self):
+        try:
+            b_str = self.comboB.currentText().strip()
+            t_str = self.comboT.currentText().strip()
+            l_str = self.lineL.text().strip()
+            u_str = self.lineU.text().strip()
 
-    def mostrar_cantidad(self):
-        def f(m):
-            self._info("Números representables",
-                       f"2(B-1)·B^(t-1)·(U-L+1) + 1 = {m.cantidad()}\n"
-                       "(incluye el cero)")
-        self._ejecutar_malla(f)
+            if not (b_str and t_str and l_str and u_str):
+                return None
 
-    def mostrar_distancia(self):
-        def f(m):
-            d_min, d_max = m.distancia(m.L), m.distancia(m.U)
-            self._info("Distancia entre representantes",
-                       "Entre consecutivos con exponente e la distancia es B^(e-t).\n\n"
-                       f"e = L = {m.L}:  {fraccion_str(d_min)}  ≈ {a_decimal_str(d_min)}\n"
-                       f"e = U = {m.U}:  {fraccion_str(d_max)}  ≈ {a_decimal_str(d_max)}")
-        self._ejecutar_malla(f)
+            b = int(b_str)
+            t = int(t_str)
+            l = int(l_str)
+            u = int(u_str)
+
+            if l > u:
+                return "ERROR_RANGO"
+
+            return b, t, l, u
+        except ValueError:
+            return None
+
+    def formatear_potencia_segura(self, base: int, exponente: int) -> str:
+        estimacion_exp10 = exponente * math.log10(base) if base > 0 else 0
+
+        if estimacion_exp10 > 300:
+            return f"≈ 10^{estimacion_exp10:.2f} (Supera límite flotante standard)"
+        elif estimacion_exp10 < -300:
+            return f"≈ 10^{estimacion_exp10:.2f} (Valor positivo infinitesimal)"
+
+        try:
+            val = float(base) ** exponente
+            return f"{val:.6e}"
+        except OverflowError:
+            return f"{base}^{exponente}"
+
+    def actualizar_info_menor(self):
+        params = self.obtener_parametros_malla()
+        if params == "ERROR_RANGO":
+            self.lblAclaraciones.setText("<b>Error de Malla</b><br><br>El exponente mínimo L debe ser menor o igual que U (L ≤ U).")
+            return
+        if not params:
+            self.lblAclaraciones.setText(
+                "<b>Menor Representante</b><br><br>"
+                "Menor número positivo normalizado en la malla.<br><br>"
+                "<i>Fórmula:</i> B<sup>-1</sup> × B<sup>L</sup> = B<sup>L-1</sup>"
+            )
+            return
+
+        b, t, l, u = params
+        exp_final = l - 1
+        valor_str = self.formatear_potencia_segura(b, exp_final)
+
+        self.lblAclaraciones.setText(
+            f"<b>Menor Representante</b><br><br>"
+            f"<b>Fórmula:</b> {b}<sup>{exp_final}</sup><br><br>"
+            f"<b>Valor:</b> {valor_str}"
+        )
+
+    def actualizar_info_mayor(self):
+        params = self.obtener_parametros_malla()
+        if params == "ERROR_RANGO":
+            self.lblAclaraciones.setText("<b>Error de Malla</b><br><br>El exponente mínimo L debe ser menor o igual que U (L ≤ U).")
+            return
+        if not params:
+            self.lblAclaraciones.setText(
+                "<b>Mayor Representante</b><br><br>"
+                "Mayor número positivo representable en la malla.<br><br>"
+                "<i>Fórmula:</i> (1 - B<sup>-t</sup>) × B<sup>U</sup>"
+            )
+            return
+
+        b, t, l, u = params
+        mantisa_max = 1.0 - (float(b) ** (-t))
+        estimacion_exp10 = u * math.log10(b)
+
+        if estimacion_exp10 > 300:
+            valor_str = f"{mantisa_max:.4f} × {b}<sup>{u}</sup> (Overflow en float64)"
+        else:
+            try:
+                val = mantisa_max * (float(b) ** u)
+                valor_str = f"{val:.6e}"
+            except OverflowError:
+                valor_str = f"{mantisa_max:.4f} × {b}<sup>{u}</sup>"
+
+        self.lblAclaraciones.setText(
+            f"<b>Mayor Representante</b><br><br>"
+            f"<b>Fórmula:</b> (1 - {b}<sup>-{t}</sup>) × {b}<sup>{u}</sup><br><br>"
+            f"<b>Valor:</b> {valor_str}"
+        )
+
+    def actualizar_info_cantidad(self):
+        params = self.obtener_parametros_malla()
+        if params == "ERROR_RANGO":
+            self.lblAclaraciones.setText("<b>Error de Malla</b><br><br>El exponente mínimo L debe ser menor o igual que U (L ≤ U).")
+            return
+        if not params:
+            self.lblAclaraciones.setText(
+                "<b>Números Representables</b><br><br>"
+                "Cantidad total de números normalizados que contiene la malla (incluyendo el cero).<br><br>"
+                "<i>Fórmula:</i> 2(B - 1) × B<sup>t-1</sup> × (U - L + 1) + 1"
+            )
+            return
+
+        b, t, l, u = params
+        try:
+            total = 2 * (b - 1) * (b ** (t - 1)) * (u - l + 1) + 1
+            total_str = f"{total:,}"
+            if len(str(total)) > 25:
+                total_str = f"≈ {total:.4e} ({len(str(total))} dígitos)"
+        except Exception:
+            total_str = "Número demasiado grande para procesar"
+
+        self.lblAclaraciones.setText(
+            f"<b>Números Representables</b><br><br>"
+            f"<b>Fórmula:</b> 2({b}-1) × {b}<sup>{t-1}</sup> × ({u}-({l})+1) + 1<br><br>"
+            f"<b>Total en F:</b> {total_str}"
+        )
+
+    def actualizar_info_distancia(self):
+        params = self.obtener_parametros_malla()
+        if params == "ERROR_RANGO":
+            self.lblAclaraciones.setText("<b>Error de Malla</b><br><br>El exponente mínimo L debe ser menor o igual que U (L ≤ U).")
+            return
+        if not params:
+            self.lblAclaraciones.setText(
+                "<b>Distancia entre Representantes</b><br><br>"
+                "Paso entre puntos consecutivos bajo un mismo exponente <i>e</i>.<br><br>"
+                "<i>Fórmula:</i> Δ = B<sup>e - t</sup>"
+            )
+            return
+
+        b, t, l, u = params
+        exp_min = l - t
+        valor_str = self.formatear_potencia_segura(b, exp_min)
+
+        self.lblAclaraciones.setText(
+            f"<b>Distancia entre Representantes</b><br><br>"
+            f"<b>Fórmula general:</b> Δ = {b}<sup>e - {t}</sup><br><br>"
+            f"<b>Paso en exponente mínimo (L={l}):</b> {valor_str}"
+        )
 
     def representar_numero(self):
-        # Se limpian los resultados anteriores para no mostrar datos viejos.
         for linea in (self.lineTruncamiento, self.lineRedondeo):
             linea.clear()
             linea.setToolTip("")
 
-        # Los datos inválidos (malla o número mal escrito) se avisan en una ventana.
         try:
             m = self.leer_malla()
             x = parsear(self.lineNumero.text(), m.B)
@@ -220,17 +310,14 @@ class VentanaConversor(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.warning(self, "Labery", str(e))
             return
 
-        # Overflow/underflow se muestran en el propio campo (cada método por separado,
-        # porque puede pasar que el truncamiento sea válido y el redondeo no).
         for linea, modo in ((self.lineTruncamiento, "corte"),
                             (self.lineRedondeo, "redondeo")):
             try:
                 linea.setText(m.representar(x, modo))
                 linea.setToolTip("")
             except MallaError as e:
-                linea.setText(str(e).split(":")[0])   # "Overflow" / "Underflow"
+                linea.setText(str(e).split(":")[0])
                 linea.setToolTip(str(e))
-
     
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
