@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>862</width>
-    <height>415</height>
+    <height>417</height>
    </rect>
   </property>
   <property name="palette">
@@ -184,7 +184,7 @@ QTabBar::tab:hover:!selected {
 }
 
 QTabBar::tab:first {
-    margin-left: 125px;
+    margin-left: 25px;
 }
 
 /* ==========================================================================
@@ -476,90 +476,107 @@ QToolButton:!checked:hover {
        <item row="0" column="0">
         <widget class="QTabWidget" name="pestanias">
          <property name="currentIndex">
-          <number>2</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="tab">
           <attribute name="title">
            <string>Conversor de Base</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="1" column="0">
-            <widget class="QWidget" name="franjaEntrada" native="true">
-             <widget class="QLineEdit" name="txtNumero">
+           <item row="2" column="0">
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <widget class="QWidget" name="franjaResultados" native="true">
               <property name="geometry">
                <rect>
-                <x>30</x>
-                <y>20</y>
-                <width>500</width>
-                <height>51</height>
+                <x>20</x>
+                <y>10</y>
+                <width>372</width>
+                <height>63</height>
                </rect>
               </property>
-              <property name="maximumSize">
-               <size>
-                <width>500</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="maxLength">
-               <number>500</number>
-              </property>
-              <property name="placeholderText">
-               <string>Ingrese el número a convertir...</string>
-              </property>
+              <widget class="QLabel" name="lblResultado">
+               <property name="geometry">
+                <rect>
+                 <x>43</x>
+                 <y>0</y>
+                 <width>57</width>
+                 <height>16</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>Resultado</string>
+               </property>
+              </widget>
+              <widget class="QToolButton" name="btnCopiarResultado">
+               <property name="geometry">
+                <rect>
+                 <x>250</x>
+                 <y>27</y>
+                 <width>41</width>
+                 <height>31</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>⧉</string>
+               </property>
+              </widget>
+              <widget class="QLineEdit" name="txtResultado">
+               <property name="geometry">
+                <rect>
+                 <x>40</x>
+                 <y>20</y>
+                 <width>201</width>
+                 <height>41</height>
+                </rect>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </widget>
-             <widget class="QPushButton" name="btnCalcular">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
+             <widget class="QToolButton" name="btnCopiarNormalizado">
               <property name="geometry">
                <rect>
                 <x>560</x>
-                <y>20</y>
-                <width>100</width>
-                <height>51</height>
+                <y>35</y>
+                <width>41</width>
+                <height>31</height>
                </rect>
               </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="text">
+               <string>⧉</string>
               </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="sizeIncrement">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
+             </widget>
+             <widget class="QLabel" name="lblNormalizado">
+              <property name="geometry">
+               <rect>
+                <x>354</x>
+                <y>10</y>
+                <width>72</width>
+                <height>14</height>
+               </rect>
               </property>
               <property name="text">
-               <string>CONVERTIR</string>
+               <string>Normalizado</string>
               </property>
-              <property name="iconSize">
-               <size>
-                <width>32</width>
-                <height>26</height>
-               </size>
+             </widget>
+             <widget class="QLineEdit" name="txtNormalizado">
+              <property name="geometry">
+               <rect>
+                <x>350</x>
+                <y>30</y>
+                <width>201</width>
+                <height>41</height>
+               </rect>
               </property>
-              <property name="shortcut">
-               <string/>
-              </property>
-              <property name="checkable">
-               <bool>false</bool>
+              <property name="readOnly">
+               <bool>true</bool>
               </property>
              </widget>
             </widget>
@@ -899,7 +916,7 @@ QToolButton:!checked:hover {
              <widget class="QLabel" name="lblPrecision">
               <property name="geometry">
                <rect>
-                <x>270</x>
+                <x>262</x>
                 <y>16</y>
                 <width>81</width>
                 <height>31</height>
@@ -911,100 +928,83 @@ QToolButton:!checked:hover {
              </widget>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QFrame" name="frame">
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <widget class="QWidget" name="franjaResultados" native="true">
+           <item row="1" column="0">
+            <widget class="QWidget" name="franjaEntrada" native="true">
+             <widget class="QLineEdit" name="txtNumero">
               <property name="geometry">
                <rect>
-                <x>20</x>
-                <y>10</y>
-                <width>372</width>
-                <height>63</height>
+                <x>30</x>
+                <y>20</y>
+                <width>500</width>
+                <height>51</height>
                </rect>
               </property>
-              <widget class="QLabel" name="lblResultado">
-               <property name="geometry">
-                <rect>
-                 <x>43</x>
-                 <y>0</y>
-                 <width>57</width>
-                 <height>16</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>Resultado</string>
-               </property>
-              </widget>
-              <widget class="QToolButton" name="btnCopiarResultado">
-               <property name="geometry">
-                <rect>
-                 <x>250</x>
-                 <y>27</y>
-                 <width>41</width>
-                 <height>31</height>
-                </rect>
-               </property>
-               <property name="text">
-                <string>⧉</string>
-               </property>
-              </widget>
-              <widget class="QLineEdit" name="txtResultado">
-               <property name="geometry">
-                <rect>
-                 <x>40</x>
-                 <y>20</y>
-                 <width>201</width>
-                 <height>41</height>
-                </rect>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
+              <property name="maximumSize">
+               <size>
+                <width>500</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="maxLength">
+               <number>500</number>
+              </property>
+              <property name="placeholderText">
+               <string>Ingrese el número a convertir...</string>
+              </property>
              </widget>
-             <widget class="QToolButton" name="btnCopiarNormalizado">
+             <widget class="QPushButton" name="btnCalcular">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="geometry">
                <rect>
                 <x>560</x>
-                <y>30</y>
-                <width>41</width>
-                <height>31</height>
+                <y>20</y>
+                <width>100</width>
+                <height>51</height>
                </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="sizeIncrement">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="text">
-               <string>⧉</string>
+               <string>CONVERTIR</string>
               </property>
-             </widget>
-             <widget class="QLabel" name="lblNormalizado">
-              <property name="geometry">
-               <rect>
-                <x>354</x>
-                <y>10</y>
-                <width>72</width>
-                <height>14</height>
-               </rect>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>26</height>
+               </size>
               </property>
-              <property name="text">
-               <string>Normalizado</string>
+              <property name="shortcut">
+               <string/>
               </property>
-             </widget>
-             <widget class="QLineEdit" name="txtNormalizado">
-              <property name="geometry">
-               <rect>
-                <x>350</x>
-                <y>30</y>
-                <width>201</width>
-                <height>41</height>
-               </rect>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
+              <property name="checkable">
+               <bool>false</bool>
               </property>
              </widget>
             </widget>
@@ -1364,7 +1364,7 @@ representantes</string>
              </rect>
             </property>
             <property name="text">
-             <string>Número a representar:</string>
+             <string>Número a representar</string>
             </property>
            </widget>
            <widget class="QLineEdit" name="lineNumero">
@@ -1381,6 +1381,9 @@ representantes</string>
               <width>16777215</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="placeholderText">
+             <string>Ingrese un número en base [B]...</string>
             </property>
            </widget>
            <widget class="QLineEdit" name="lineRedondeo">
@@ -1577,7 +1580,7 @@ representantes</string>
             <property name="geometry">
              <rect>
               <x>520</x>
-              <y>23</y>
+              <y>28</y>
               <width>140</width>
               <height>42</height>
              </rect>
@@ -1684,6 +1687,9 @@ representantes</string>
               <height>41</height>
              </rect>
             </property>
+            <property name="placeholderText">
+             <string>Ingrese un número</string>
+            </property>
            </widget>
            <widget class="QLineEdit" name="lineOperando2">
             <property name="geometry">
@@ -1693,6 +1699,9 @@ representantes</string>
               <width>131</width>
               <height>41</height>
              </rect>
+            </property>
+            <property name="placeholderText">
+             <string>Ingrese un número </string>
             </property>
            </widget>
            <widget class="QLabel" name="lblOperando1">
@@ -1730,6 +1739,51 @@ representantes</string>
               <height>40</height>
              </rect>
             </property>
+            <item>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>5</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>6</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>7</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>8</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>9</string>
+             </property>
+            </item>
            </widget>
            <widget class="QLabel" name="lblPrecisionC">
             <property name="geometry">
