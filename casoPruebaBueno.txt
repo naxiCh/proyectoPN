@@ -1,0 +1,19 @@
+[CONVERSOR]
+base_origen = 10
+base_destino = 2
+precision = 4
+numero = 10
+
+[MALLA]
+B = 16
+t = 9
+L = -2
+U = 2
+numero = 0.FFFFFF
+
+[CALCULADORA]
+operando1 = 0.5
+operando2 = 0.25
+operacion = *
+precision = 4
+corte = redondeo

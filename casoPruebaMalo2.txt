@@ -1,0 +1,19 @@
+[CONVERSOR]
+base_origen = 10
+base_destino = 2
+precision = 5
+numero = 0
+
+[MALLA]
+B = 10
+t = 3
+L = -2
+U = 2
+numero = 9999
+
+[CALCULADORA]
+operando1 = 1.0004
+operando2 = 1.0001
+precision = 4
+operacion = -
+corte = truncamiento

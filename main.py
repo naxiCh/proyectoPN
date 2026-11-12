@@ -8,12 +8,25 @@ from PyQt6.QtGui import QIntValidator
 import math
 from decimal import Decimal, Overflow as DecOverflow
 from malla import Malla, MallaError, parsear, a_decimal_str
-
+from cargador_pruebas import cargar_caso_prueba_txt
 # Importamos las funciones del módulo de lógica matemática
 from logica_conversor import convertir_base, normalizar_pfn
 from calculadora import calcular
+from PyQt6 import QtCore, QtWidgets, uic
 
+from PyQt6.QtGui import QIntValidator, QValidator
 
+class ValidadorPrecision(QIntValidator):
+    def validate(self, texto: str, pos: int):
+        if texto.strip() == "":
+            return (QValidator.State.Intermediate, texto, pos)
+
+        estado, texto_val, pos_val = super().validate(texto, pos)
+        if estado == QValidator.State.Acceptable:
+            return (QValidator.State.Acceptable, texto_val, pos_val)
+
+        return (QValidator.State.Invalid, texto, pos)
+    
 class VentanaConversor(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -32,6 +45,7 @@ class VentanaConversor(QtWidgets.QMainWindow):
         """)
 
         self.frameAlerta.setVisible(False)
+        self.configurar_combos_precision()       
         self.poblar_bases()
         self.aplicar_sombras()
         #evento malla
@@ -41,6 +55,12 @@ class VentanaConversor(QtWidgets.QMainWindow):
 
         self.btnCalcular.clicked.connect(self.ejecutar_calculo)
         self.txtNumero.textChanged.connect(self.validar_entrada)
+        self.btnCopiarResultado.clicked.connect(
+            lambda _checked=False: self.copiar_a_portapapeles(self.txtResultado)
+        )
+        self.btnCopiarNormalizado.clicked.connect(
+            lambda _checked=False: self.copiar_a_portapapeles(self.txtNormalizado)
+        )
 
         self.comboB.setPlaceholderText("B")
         self.comboT.setPlaceholderText("t")
@@ -52,8 +72,34 @@ class VentanaConversor(QtWidgets.QMainWindow):
         validador = QIntValidator(-999, 999, self)
         self.lineL.setValidator(validador)
         self.lineU.setValidator(validador)
+        if hasattr(self, "btnCargar"):
+            self.btnCargar.setCursor(QtCore.Qt.CursorShape.PointingHandCursor)
+            self.btnCargar.setToolTip("Cargar caso de prueba desde archivo .txt")
+            self.btnCargar.clicked.connect(lambda: cargar_caso_prueba_txt(self))
 
+    def configurar_combos_precision(self):
+        opciones_estandar = ["3", "4", "8", "12", "15", "24", "53", "64", "100"]
+        validador_t = ValidadorPrecision(1, 100, self)
+
+        for combo in self.findChildren(QtWidgets.QComboBox):
+            nombre = combo.objectName().lower()
+            if "precision" in nombre or combo.objectName() == "comboT":
+                combo.setEditable(True)
+                combo.setInsertPolicy(QtWidgets.QComboBox.InsertPolicy.NoInsert)
+                combo.clear()
+                combo.addItems(opciones_estandar)
+                combo.setCurrentText("15")
+                combo.lineEdit().setValidator(validador_t)
+                combo.lineEdit().setPlaceholderText("1 - 100...")
    
+    def obtener_precision_valida(self, combo) -> int:
+        texto = combo.currentText().strip()
+        if not texto:
+            raise ValueError("Ingresá un valor de precisión t (entre 1 y 100).")
+        t = int(texto)
+        if not (1 <= t <= 100):
+            raise ValueError("La precisión t debe estar entre 1 y 100.")
+        return t
     
     def poblar_bases(self):
         bases = [str(b) for b in range(2, 17)]
@@ -87,22 +133,26 @@ class VentanaConversor(QtWidgets.QMainWindow):
                 sombra.setColor(QColor(29, 53, 87, 45))
                 widget.setGraphicsEffect(sombra)
 
-    def validar_entrada(self):
+    def validar_entrada(self) -> bool:
         base = int(self.comboBaseOrigen.currentText())
         alfabeto = "0123456789ABCDEF"[:base]
         texto = self.txtNumero.text().strip().upper().replace(",", ".").lstrip("-")
 
         if not texto:
             self.frameAlerta.setVisible(False)
-            return
+            return False
 
         partes = texto.split(".")
         if len(partes) > 2:
             self.frameAlerta.setVisible(True)
-            return
+            return False
 
         es_valido = all(c in alfabeto for c in "".join(partes))
         self.frameAlerta.setVisible(not es_valido)
+        return es_valido
+
+    def copiar_a_portapapeles(self, campo: QtWidgets.QLineEdit) -> None:
+        QtWidgets.QApplication.clipboard().setText(campo.text())
 
     def ejecutar_calculo(self):
         # 1. Obtener valores de la interfaz
@@ -119,6 +169,9 @@ class VentanaConversor(QtWidgets.QMainWindow):
         # Validar si el campo de texto está vacío
         if not texto_numero:
             self.frameAlerta.setVisible(False)
+            return
+
+        if not self.validar_entrada():
             return
 
         try:
@@ -141,7 +194,6 @@ class VentanaConversor(QtWidgets.QMainWindow):
 
             # Ocultar marco de alerta si el cálculo fue exitoso
             self.frameAlerta.setVisible(False)
-
         except Exception as e:
             print("Error durante el cálculo:", e)
             self.frameAlerta.setVisible(True)
@@ -159,17 +211,16 @@ class VentanaConversor(QtWidgets.QMainWindow):
         self.lineTruncamiento.setReadOnly(True)
 
     def leer_malla(self) -> Malla:
-        """Arma la malla con los datos de la pantalla (lanza ValueError/MallaError)."""
-        if self.comboB.currentIndex() < 0 or self.comboT.currentIndex() < 0:
-            raise ValueError("Elegí la base B y la cantidad de dígitos t.")
+        if self.comboB.currentIndex() < 0:
+            raise ValueError("Elegí la base B.")
+        t = self.obtener_precision_valida(self.comboT)
         try:
             L = int(self.lineL.text())
             U = int(self.lineU.text())
         except ValueError:
             raise ValueError("Ingresá L y U como números enteros.")
-        return Malla(int(self.comboB.currentText()),
-                     int(self.comboT.currentText()), L, U)
-
+        return Malla(int(self.comboB.currentText()), t, L, U)
+    
     def obtener_parametros_malla(self):
         try:
             b_str = self.comboB.currentText().strip()
@@ -382,14 +433,12 @@ class VentanaConversor(QtWidgets.QMainWindow):
         try:
             if self.operacion is None:
                 raise ValueError("Elegí una operación (+, -, *, /).")
-            if self.comboPrecisionC.currentIndex() < 0:
-                raise ValueError("Elegí los dígitos de precisión.")
             if self.comboBox_2.currentIndex() < 0:
                 raise ValueError("Elegí el tipo de corte.")
 
+            t = self.obtener_precision_valida(self.comboPrecisionC)
             x = parsear(self.lineOperando1.text(), 10)
             y = parsear(self.lineOperando2.text(), 10)
-            t = int(self.comboPrecisionC.currentText())
             modo = "corte" if self.comboBox_2.currentIndex() == 0 else "redondeo"
 
             r = calcular(x, y, self.operacion, t, modo)
