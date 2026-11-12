@@ -7,7 +7,7 @@ from PyQt6.QtGui import QColor
 from PyQt6.QtGui import QIntValidator
 import math
 from decimal import Decimal, Overflow as DecOverflow
-from malla import Malla, MallaError, parsear, a_decimal_str, fraccion_str
+from malla import Malla, MallaError, parsear, a_decimal_str
 
 # Importamos las funciones del módulo de lógica matemática
 from logica_conversor import convertir_base, normalizar_pfn
@@ -154,10 +154,6 @@ class VentanaConversor(QtWidgets.QMainWindow):
         self.btnMayor.clicked.connect(self.actualizar_info_mayor)
         self.btnNumero.clicked.connect(self.actualizar_info_cantidad)
         self.btnDistancia.clicked.connect(self.actualizar_info_distancia)
-        self.btnMenor.clicked.connect(self.mostrar_menor)
-        self.btnMayor.clicked.connect(self.mostrar_mayor)
-        self.btnNumero.clicked.connect(self.mostrar_cantidad)
-        self.btnDistancia.clicked.connect(self.mostrar_distancia)
         self.btnRepresentar.clicked.connect(self.representar_numero)
         self.lineRedondeo.setReadOnly(True)
         self.lineTruncamiento.setReadOnly(True)
@@ -324,47 +320,6 @@ class VentanaConversor(QtWidgets.QMainWindow):
             f"<b>Fórmula general:</b> Δ = {b}<sup>e - {t}</sup><br><br>"
             f"<b>Paso en exponente mínimo (L={l}):</b> {valor}"
         )
-
-    def _ejecutar_malla(self, accion):
-        """Corre `accion(malla)` y muestra cualquier error en un aviso."""
-        try:
-            accion(self.leer_malla())
-        except (ValueError, MallaError) as e:
-            QtWidgets.QMessageBox.warning(self, "Labery", str(e))
-            return
-
-    def _info(self, titulo, texto):
-        QtWidgets.QMessageBox.information(self, titulo, texto)
-
-    def mostrar_menor(self):
-        def f(m):
-            txt, val = m.menor()
-            self._info("Menor representante",
-                       f"{txt}\n= B^(L-1) = {fraccion_str(val)}\n≈ {a_decimal_str(val)}")
-        self._ejecutar_malla(f)
-
-    def mostrar_mayor(self):
-        def f(m):
-            txt, val = m.mayor()
-            self._info("Mayor representante",
-                       f"{txt}\n= (1 - B^-t)·B^U = {fraccion_str(val)}\n≈ {a_decimal_str(val)}")
-        self._ejecutar_malla(f)
-
-    def mostrar_cantidad(self):
-        def f(m):
-            self._info("Números representables",
-                       f"2(B-1)·B^(t-1)·(U-L+1) + 1 = {m.cantidad()}\n"
-                       "(incluye el cero)")
-        self._ejecutar_malla(f)
-
-    def mostrar_distancia(self):
-        def f(m):
-            d_min, d_max = m.distancia(m.L), m.distancia(m.U)
-            self._info("Distancia entre representantes",
-                       "Entre consecutivos con exponente e la distancia es B^(e-t).\n\n"
-                       f"e = L = {m.L}:  {fraccion_str(d_min)}  ≈ {a_decimal_str(d_min)}\n"
-                       f"e = U = {m.U}:  {fraccion_str(d_max)}  ≈ {a_decimal_str(d_max)}")
-        self._ejecutar_malla(f)
 
     def representar_numero(self):
         # Se limpian los resultados anteriores para no mostrar datos viejos.

@@ -2,9 +2,6 @@ from fractions import Fraction
 from math import floor
 from dataclasses import dataclass
 
-#def calcular(x, y, op, t, modo):
-    # provisorio: solo para probar que la interfaz se conecta
- #   return f"{x} {op} {y} (t={t}, {modo})", "0", "0"
 
 #extraido y modificado desde malla.py
 def _exponente(a: Fraction, B: int = 10) -> int:
